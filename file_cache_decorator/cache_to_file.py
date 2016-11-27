@@ -1,23 +1,11 @@
 
-from base64 import urlsafe_b64encode
 from collections import OrderedDict
 from os.path import join, exists, getmtime
 from sys import stderr
-from tempfile import gettempdir
 from time import time
 from os import makedirs
-from hashlib import md5
 from pickle import dumps, dump, load
-
-
-DEFAULT_CACHE_DIR = join(gettempdir(), 'cache_to_file')
-
-
-def hash_func_md5(bin):
-	"""
-	Calculates the md5 hash of a binary 'string', as a filesystem-safe string.
-	"""
-	return str(urlsafe_b64encode(md5(bin).digest()), 'ascii')
+from file_cache_decorator.utils import DEFAULT_CACHE_DIR, hash_func_md5
 
 
 def cache_to_file(func=None, duration=259200, dir=DEFAULT_CACHE_DIR, mem_limit=1000,
@@ -44,7 +32,6 @@ def cache_to_file(func=None, duration=259200, dir=DEFAULT_CACHE_DIR, mem_limit=1
 	Calling`f(a)` as `f(5)` and then `f(a=5)` will result in a cache-miss (but works fine except for that).
 	The same applies for calling `instance.method()` and changing the instance before calling again.
 	"""
-	#todo: better hash for `self`, possibly cached (for now ismethod() doesn't even work)
 	if check_collisions:
 		raise NotImplementedError('check_collisions not implemented')
 	def cache_to_file_decorator(func):
