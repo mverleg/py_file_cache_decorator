@@ -12,6 +12,6 @@ def hash_func_md5(bin):
 	"""
 	Calculates the md5 hash of a binary 'string', as a filesystem-safe string.
 	"""
-	return str(urlsafe_b64encode(md5(bin).digest()), 'ascii')
+	return str(urlsafe_b64encode(md5(bin).digest()), 'ascii').rstrip('=')
 
 

@@ -51,7 +51,7 @@ def cache_to_file(func=None, duration=259200, dir=DEFAULT_CACHE_DIR, mem_limit=1
 				if debug_msgs:
 					stderr.write('cache hit (memory) for {0:}\n'.format(func))
 				return func._CACHE[arghash]
-			cache_str = '{f:s}_{arg:}'.format(f=func.__name__, arg=arghash[:12])
+			cache_str = '{f:s}_{arg:}'.format(f=func.__name__, arg=arghash)
 			pth = join(dir, '{0:s}.cache'.format(cache_str))
 			if exists(pth):
 				mtime = getmtime(pth)
